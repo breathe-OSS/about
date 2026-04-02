@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breathe: About & Philosophy</title>
+  <meta name="description"
+    content="Breathe is a free and open-source platform for accurate, transparent air quality monitoring across Jammu and Kashmir. Learn about our philosophy, methodology, and the technology behind ground-truth hyperlocal AQI data." />
+  <link rel="icon" href="assets/images/web-icon.webp" type="image/webp" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="main-content">
+    <div id="view-about" class="view active-view" style="display: flex;">
+      <div class="content-scroll">
+        <header>
+          <div class="header-brand">
+            <h1>Breathe <img src="assets/images/logo.png" alt="Breathe Logo" class="brand-logo"></h1>
+          </div>
+          <a href="https://github.com/breathe-OSS" class="github-link" target="_blank">
+            <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"
+              style="fill: currentColor;">
+              <path fill-rule="evenodd"
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019-0 0022 12.017C22 6.484 17.522 2 12 2z">
+              </path>
+            </svg>
+            <span class="desktop-text">View on GitHub</span>
+          </a>
+        </header>
+
+        <div class="card main-aqi-card" id="hero"
+          style="min-height: 480px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative;">
+          <div class="hero-bg-philosophy">About Us / Our Philosophy</div>
+          <div class="hero-3d-logo-container">
+            <img src="assets/images/breathelogo3d.png" alt="Breathe 3D Logo" class="hero-3d-logo" id="logo3d">
+          </div>
+        </div>
+
+        <div class="card" id="intro">
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">Mission Statement</h2>
+          <p class="body-text" style="font-size: 1.25rem; font-weight: 500; line-height: 1.4; margin-bottom: 20px;">
+            Information about the air people breathe every day should be <span style="color: var(--primary)">freely
+              accessible.</span></p>
+          <p class="body-text">BreatheOSS was built on that conviction. We are an accurate, transparent and
+            community-maintained AQI monitoring platform, and we are open in every direction that word can mean.</p>
+        </div>
+
+        <div class="card" id="problem">
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">The Problem</h2>
+          <p class="body-text">Publicly available AQI data for Jammu and Kashmir is, at best, unreliable. The region has
+            very few government-operated reference stations. Other platforms fill the gap with satellite estimates or
+            interpolated models, but without ground-level validation, those numbers are difficult to trust. None of this
+            data is open, and very little of it is explained.</p>
+
+          <div class="problem-evidence">
+            <img src="assets/images/problem-map.png" alt="J&K Government Sensor Map" class="evidence-img">
+            <div class="evidence-caption">"Only 3 government ground sensors in the entire state of J&K"</div>
+          </div>
+
+          <div class="problem-evidence"
+            style="margin-top: 32px; border-top: 1px solid var(--outline-variant); padding-top: 32px;">
+            <img src="assets/images/jkpcb-problem.png" alt="JKPCB Monthly Data Report" class="evidence-img">
+            <div class="evidence-caption">"The JKPCB publishes air quality data for their air quality stations, but only
+              as monthly averages, and with no transparency into how those averages are derived. A single reading taken
+              at the end of the month would produce the same number as thirty daily measurements."</div>
+          </div>
+        </div>
+
+        <div class="card" id="approach">
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">Our Approach</h2>
+          <p class="body-text">We believe in ground truth. Our network uses a <span
+              style="color: var(--primary); font-weight: 600;">hybrid approach</span>:
+            official AirGradient kits alongside DIY units built using AirGradient’s open-hardware files. This ensures
+            that manufacturing and assembly stay in India, avoiding the prohibitive costs of international shipping and
+            customs while maintaining rigorous, open standards. Where we lack ground coverage, satellite modeling (CAMS)
+            fills in the gaps for regional trends.</p>
+
+          <div class="pollutant-grid" style="margin-top: 20px;">
+            <div class="pollutant-card">
+              <span class="p-name">AirGradient Hybrid</span>
+              <p style="font-size: 12px; color: var(--on-surface-variant);">Official kits + India-assembled DIY
+                open-hardware, validated against reference instruments.</p>
+            </div>
+            <div class="pollutant-card">
+              <span class="p-name">Satellite (CAMS)</span>
+              <p style="font-size: 12px; color: var(--on-surface-variant);">Regional trends via CAMS modeling via
+                Open-Meteo, used for areas without ground sensors.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="open">
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">Philosophy</h2>
+          <p class="body-text">Open source is not just a licensing decision for us. The code is open so anyone can audit
+            what we claim. The methodology is documented so anyone can challenge it. The data is free so anyone can use
+            it. We think that is how it should be, and believe that should never be changed. Open-source is
+            fundamentally about dismantling artificial boundaries and democratizing access to truth. in a country as
+            vast and structurally complex as India, decentralized and transparent systems are the most logical counter
+            to infrastructural opacity. This project grounds its philosophy in the same critical observation that
+            defined much of Pink Floyd's work: a rejection of isolation and a demand to examine the systems built around
+            us.</p>
+        </div>
+
+        <div class="team-footer">
+          <div class="team-taskbar founders">
+            <div class="team-title">Founders</div>
+            <div class="team-members">
+              <a href="https://github.com/sidharthify" target="_blank" class="member-circle" title="Siddharth">
+                <img src="assets/people/siddhi.png" alt="sidharthify">
+              </a>
+              <a href="https://github.com/FlashWreck" target="_blank" class="member-circle" title="FlashWreck">
+                <img src="assets/people/flashwreck.png" alt="FlashWreck">
+              </a>
+            </div>
+          </div>
+
+          <div class="team-taskbar contributors">
+            <div class="team-title">Contributors</div>
+            <div class="team-members">
+              <a href="https://github.com/suveshmoza" target="_blank" class="member-circle" title="suveshmoza">
+                <img src="assets/people/suveshmoza.png" alt="Suvesh Moza">
+              </a>
+              <a href="https://www.linkedin.com/in/altairirfan/" target="_blank" class="member-circle"
+                title="Altair Irfan">
+                <img src="assets/people/altair.jpg" alt="Altair">
+              </a>
+              <a href="https://github.com/SleeperOfSaturn" target="_blank" class="member-circle"
+                title="SleeperOfSaturn">
+                <img src="assets/people/saturn.webp" alt="Saturn">
+              </a>
+              <a href="https://github.com/Lostless1907" target="_blank" class="member-circle" title="Lostless">
+                <img src="assets/people/lostless.webp" alt="Lostless">
+              </a>
+              <a href="https://github.com/empirea9" target="_blank" class="member-circle" title="empirea9">
+                <img src="assets/people/empirea9.jpg" alt="EmpireA9">
+              </a>
+              <div class="member-circle redacted" title="Mr. X (Name Redacted for Privacy)">
+                <div class="redacted-icon">X</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="dist/main.js"></script>
+</body>
+
+</html>
