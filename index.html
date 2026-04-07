@@ -22,7 +22,7 @@
           <a href="https://github.com/breathe-OSS" class="github-link" target="_blank">
             <svg viewBox="0 0 24 24" aria-hidden="true" width="20" height="20" style="fill: currentColor;">
               <path fill-rule="evenodd"
-                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.110-1.466-1.110-1.466-.908-.620.069-.608.069-.608 1.003.070 1.531 1.032 1.531 1.032.892 1.530 2.341 1.088 2.910.832.092-.647.350-1.088.636-1.338-2.220-.253-4.555-1.113-4.555-4.951 0-1.093.390-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.650 0 0 .840-.270 2.750 1.026A9.564 9.564 0 0112 6.844c.850.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.100 2.651.640.700 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.920.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.180.580.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z">
+                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.620.069-.608.069-.608 1.003.070 1.531 1.032 1.531 1.032.892 1.530 2.341 1.088 2.910.832.092-.647.350-1.088.636-1.338-2.220-.253-4.555-1.113-4.555-4.951 0-1.093.390-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.650 0 0 .840-.270 2.750 1.026A9.564 9.564 0 0112 6.844c.850.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.100 2.651.640.700 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.920.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.180.580.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z">
               </path>
             </svg>
             <span class="desktop-text">View on GitHub</span>
@@ -40,54 +40,107 @@
 
         <div class="card" id="intro">
           <h2 class="section-title" style="text-align: left; color: var(--primary);">Mission Statement</h2>
-
           <p class="body-text" style="font-size: 1.25rem; font-weight: 500; line-height: 1.4; margin-bottom: 20px;">
-            Air quality data should reflect reality—not an averaged, delayed, or convenient approximation of it.
-          </p>
-
-          <p class="body-text">
-            Air quality is not an abstract number. It is something people breathe every second, something that quietly shapes health without immediate warning. In a region like Jammu and Kashmir, where monitoring infrastructure is limited and environmental awareness is still developing, people depend heavily on officially reported AQI values to understand what they are exposed to. That dependence demands accuracy, transparency, and accountability.
-          </p>
-
-          <p class="body-text">
-            Breathe was started by a small group of Class 10 students as an attempt to understand local air quality beyond what was being reported. What began as a simple investigation has grown into a funded, community-supported initiative. By deploying independent sensors and comparing them against publicly available data, we have consistently observed gaps between reported AQI values and actual on-ground conditions.
-          </p>
-
-          <p class="body-text">
-            Our mission is not just to provide data, but to restore trust in it—by building a system that is grounded in measurement, transparent in methodology, and open for anyone to verify, question, and improve.
-          </p>
+            Information about the air people breathe every day should be <span style="color: var(--primary)">accurate,
+              immediate, and verifiable.</span></p>
+          <p class="body-text">BreatheOSS was built in response to a clear gap between reported air quality and lived reality.
+            In a region where people depend heavily on official AQI data, that data must reflect actual exposure, including
+            short-term spikes and inconsistencies. We aim to provide ground-level, real-time measurements that remain
+            transparent at every stage, ensuring that what is shown corresponds to what people are truly breathing.</p>
         </div>
 
         <div class="card" id="problem">
-          <!-- unchanged -->
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">The Problem</h2>
+          <p class="body-text">Publicly available AQI data for Jammu and Kashmir is, at best, unreliable. The region has
+            very few government-operated reference stations. Other platforms fill the gap with satellite estimates or
+            interpolated models, but without ground-level validation, those numbers are difficult to trust. None of this
+            data is open, and very little of it is explained.</p>
+
+          <div class="problem-evidence">
+            <img src="assets/images/problem-map.png" alt="J&K Government Sensor Map" class="evidence-img">
+            <div class="evidence-caption">"Only 3 government ground sensors in the entire state of J&K"</div>
+          </div>
+
+          <div class="problem-evidence"
+            style="margin-top: 32px; border-top: 1px solid var(--outline-variant); padding-top: 32px;">
+            <img src="assets/images/jkpcb-problem.png" alt="JKPCB Monthly Data Report" class="evidence-img">
+            <div class="evidence-caption">"The JKPCB publishes air quality data for their air quality stations, but only
+              as monthly averages, and with no transparency into how those averages are derived. A single reading taken
+              at the end of the month would produce the same number as thirty daily measurements."</div>
+          </div>
         </div>
 
         <div class="card" id="approach">
-          <!-- unchanged -->
+          <h2 class="section-title" style="text-align: left; color: var(--primary);">Our Approach</h2>
+          <p class="body-text">We believe in ground truth. Our network uses a <span
+              style="color: var(--primary); font-weight: 600;">hybrid approach</span>:
+            official AirGradient kits alongside DIY units built using AirGradient’s open-hardware files. This ensures
+            that manufacturing and assembly stay in India, avoiding the prohibitive costs of international shipping and
+            customs while maintaining rigorous, open standards. Where we lack ground coverage, satellite modeling (CAMS)
+            fills in the gaps for regional trends.</p>
+
+          <div class="pollutant-grid" style="margin-top: 20px;">
+            <div class="pollutant-card">
+              <span class="p-name">AirGradient Hybrid</span>
+              <p style="font-size: 12px; color: var(--on-surface-variant);">Official kits + India-assembled DIY
+                open-hardware, validated against reference instruments.</p>
+            </div>
+            <div class="pollutant-card">
+              <span class="p-name">Satellite (CAMS)</span>
+              <p style="font-size: 12px; color: var(--on-surface-variant);">Regional trends via CAMS modeling via
+                Open-Meteo, used for areas without ground sensors.</p>
+            </div>
+          </div>
         </div>
 
         <div class="card" id="open">
           <h2 class="section-title" style="text-align: left; color: var(--primary);">Philosophy</h2>
+          <p class="body-text">Air quality data is only meaningful if it can be trusted. That trust depends on transparency,
+            consistency, and access to raw information. We reject systems that obscure reality through extended averages,
+            incomplete reporting, or closed methodologies. Pollution is experienced in real time, not as a smoothed monthly
+            value, and any system that fails to reflect that undermines public awareness. Our approach is built on openness at
+            every level: open hardware, open data, and clear documentation. This allows independent verification, encourages
+            accountability, and ensures that monitoring serves its intended purpose—not convenience, but truth.</p>
+        </div>
 
-          <p class="body-text">
-            Open source, for us, is not a feature—it is the foundation. The code is open so it can be audited. The methodology is documented so it can be challenged. The data is accessible so it can be used, questioned, and improved. Systems that affect public health should not operate behind opacity.
-          </p>
+        <div class="team-footer">
+          <div class="team-taskbar founders">
+            <div class="team-title">Founders</div>
+            <div class="team-members">
+              <a href="https://github.com/sidharthify" target="_blank" class="member-circle" title="sidharthify">
+                <img src="assets/people/siddhi.png" alt="sidharthify">
+              </a>
+              <a href="https://github.com/FlashWreck" target="_blank" class="member-circle" title="FlashWreck">
+                <img src="assets/people/flashwreck.png" alt="FlashWreck">
+              </a>
+            </div>
+          </div>
 
-          <p class="body-text">
-            Current air quality reporting often fails this standard. A major issue lies in how pollution is represented through extended averages, such as 30-day smoothing. Pollution is not experienced over a month—it is experienced in spikes, on specific days and hours. When those spikes are averaged out, the severity of exposure is hidden. A dangerous day becomes statistically invisible, replaced by a misleading sense of safety.
-          </p>
-
-          <p class="body-text">
-            There are also structural inconsistencies in monitoring itself. Sensors may go offline or fail to report, yet these gaps are rarely communicated clearly. In a region with already limited monitoring coverage, even temporary outages distort the overall picture. When these gaps are filled with modeled estimates without transparency, the data begins to lose its connection with what people are actually breathing.
-          </p>
-
-          <p class="body-text">
-            Equally concerning is the lack of access to raw data. The public is presented with final AQI values, but not the underlying measurements. Without granular, real-time data, independent verification becomes impossible. Researchers cannot validate findings, and citizens cannot question the system that informs their daily decisions.
-          </p>
-
-          <p class="body-text">
-            This project exists to counter that. Not through rhetoric, but through construction—by building a system that prioritizes ground truth, transparency, and verifiability. Our goal is to expose gaps where they exist, push for higher standards, and contribute to a system where environmental data reflects reality with precision and honesty.
-          </p>
+          <div class="team-taskbar contributors">
+            <div class="team-title">Contributors</div>
+            <div class="team-members">
+              <a href="https://github.com/suveshmoza" target="_blank" class="member-circle" title="suveshmoza">
+                <img src="assets/people/suveshmoza.png" alt="Suvesh Moza">
+              </a>
+              <a href="https://www.linkedin.com/in/altairirfan/" target="_blank" class="member-circle"
+                title="Altair Irfan">
+                <img src="assets/people/altair.jpg" alt="Altair">
+              </a>
+              <a href="https://github.com/SleeperOfSaturn" target="_blank" class="member-circle"
+                title="SleeperOfSaturn">
+                <img src="assets/people/saturn.webp" alt="Saturn">
+              </a>
+              <a href="https://github.com/Lostless1907" target="_blank" class="member-circle" title="Lostless">
+                <img src="assets/people/lostless.webp" alt="Lostless">
+              </a>
+              <a href="https://github.com/empirea9" target="_blank" class="member-circle" title="empirea9">
+                <img src="assets/people/empirea9.jpg" alt="EmpireA9">
+              </a>
+              <div class="member-circle redacted" title="Mr. X (Name Redacted for Privacy)">
+                <div class="redacted-icon">X</div>
+              </div>
+            </div>
+          </div>
         </div>
 
       </div>
