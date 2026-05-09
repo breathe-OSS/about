@@ -211,7 +211,7 @@ body {
 
 .content-scroll {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: visible;
   overflow-x: hidden;
   height: 100%;
   width: 100%;
