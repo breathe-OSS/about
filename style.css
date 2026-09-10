@@ -2182,6 +2182,16 @@ input:checked+.slider:before {
   box-shadow: 0 12px 48px rgba(var(--primary-rgb), 0.2);
 }
 
+.team-taskbar.team {
+  border-color: rgba(var(--primary-rgb), 0.25);
+  background: rgba(var(--surface-rgb), 0.7);
+}
+
+.team-taskbar.team:hover {
+  border-color: var(--primary);
+  box-shadow: 0 12px 48px rgba(var(--primary-rgb), 0.12);
+}
+
 .team-title {
   font-family: var(--font-mono);
   font-size: 11px;
