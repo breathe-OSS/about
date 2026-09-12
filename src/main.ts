@@ -134,6 +134,30 @@ async function fetchLiveNetworkStats(): Promise<void> {
         if (covSat && satCities >= 0) {
           covSat.textContent = satCities.toString();
         }
+
+        const coverageGrid = document.getElementById('coverage-grid');
+        if (coverageGrid && zonesData.zones.length > 0) {
+          const sortedZones = [...zonesData.zones].sort((a, b) => {
+            const aGround = a.provider === 'airgradient' ? 0 : 1;
+            const bGround = b.provider === 'airgradient' ? 0 : 1;
+            if (aGround !== bGround) return aGround - bGround;
+            return a.name.localeCompare(b.name);
+          });
+
+          const fragment = document.createDocumentFragment();
+          sortedZones.forEach(z => {
+            const isGround = z.provider === 'airgradient';
+            const pill = document.createElement('div');
+            pill.className = `zone-pill ${isGround ? 'ground' : 'satellite'}`;
+            const dot = document.createElement('span');
+            dot.className = 'zone-dot';
+            pill.appendChild(dot);
+            pill.appendChild(document.createTextNode(z.name));
+            fragment.appendChild(pill);
+          });
+
+          coverageGrid.replaceChildren(fragment);
+        }
       }
     }
 

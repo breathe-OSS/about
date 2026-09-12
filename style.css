@@ -829,7 +829,7 @@ html.theme-changing *::after {
   background: var(--primary-container);
   border: 1px solid rgba(var(--primary-rgb), 0.3);
   color: var(--primary);
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -839,6 +839,55 @@ html.theme-changing *::after {
   box-shadow: 0 0 12px rgba(var(--primary-rgb), 0.12);
   transition: all var(--motion-duration-short4) var(--motion-easing-standard);
   user-select: none;
+}
+
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.zone-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  transition: background var(--motion-duration-medium2) var(--motion-easing-standard),
+              border-color var(--motion-duration-medium2) var(--motion-easing-standard),
+              color var(--motion-duration-medium2) var(--motion-easing-standard);
+}
+
+.zone-pill .zone-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: background var(--motion-duration-medium2) var(--motion-easing-standard),
+              box-shadow var(--motion-duration-medium2) var(--motion-easing-standard);
+}
+
+.zone-pill.ground {
+  background: rgba(var(--primary-rgb), 0.08);
+  border: 1px solid rgba(var(--primary-rgb), 0.25);
+  font-weight: 600;
+  color: var(--on-surface);
+}
+
+.zone-pill.ground .zone-dot {
+  background: var(--primary);
+  box-shadow: 0 0 6px var(--primary);
+}
+
+.zone-pill.satellite {
+  background: var(--surface-variant);
+  border: 1px solid var(--outline-variant);
+  color: var(--on-surface-variant);
+}
+
+.zone-pill.satellite .zone-dot {
+  background: var(--outline);
 }
 
 .pollutant-card:hover .step-number {
