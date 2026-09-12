@@ -75,6 +75,7 @@
   --scrim: rgba(0, 0, 0, 0.32);
 }
 
+html,
 body {
   background-color: var(--background);
   color: var(--on-surface);
@@ -83,6 +84,7 @@ body {
   padding: 0;
   display: block;
   min-height: 100vh;
+  max-width: 100%;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -611,9 +613,11 @@ html.theme-changing *::after {
 
 @media (max-width: 767px) {
   .hero-bg-philosophy {
-    font-size: 18px;
-    letter-spacing: 2px;
+    font-size: clamp(12px, 3.8vw, 18px);
+    letter-spacing: 1.5px;
     top: 120px;
+    max-width: 90%;
+    white-space: normal;
   }
 
   .hero-3d-logo {
@@ -2612,14 +2616,14 @@ input:checked+.slider:before {
     padding: 7px 12px;
     text-align: center;
     left: auto;
-    right: -10px;
+    right: 0;
     transform: translateY(4px);
   }
 
   .member-tooltip::after,
   .anonymous-tooltip::after {
     left: auto;
-    right: 25px;
+    right: 15px;
     transform: none;
   }
 

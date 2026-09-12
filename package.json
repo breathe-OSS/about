@@ -1,0 +1,13 @@
+{
+  "name": "about",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Breathe: About & Philosophy static web page",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}
