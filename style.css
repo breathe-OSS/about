@@ -616,7 +616,11 @@ html.theme-changing *::after {
     font-size: clamp(12px, 3.8vw, 18px);
     letter-spacing: 1.5px;
     top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
     max-width: 90%;
+    box-sizing: border-box;
     white-space: normal;
   }
 
