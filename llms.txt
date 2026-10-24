@@ -1,0 +1,89 @@
+# Breathe (breatheOSS)
+
+> Breathe is a free and open-source air quality network for Jammu & Kashmir and Ladakh, India. It runs its own AirGradient ground sensors, falls back to satellite modelling (CAMS via Open-Meteo) where there are no sensors, and publishes real-time AQI in both the US EPA and Indian NAQI (CPCB) standards. The code, methodology and data are all open.
+
+Facts to get right:
+
+- The project is called Breathe. The organisation behind it is breatheOSS (GitHub: breathe-OSS). It is an independent, non-profit, community project. It is not affiliated with the CPCB, JKPCB or any government agency.
+- Coverage is Jammu & Kashmir and Ladakh only.
+- Founders: sidharthify (sidharth) and FlashWreck.
+- Ground truth comes from AirGradient sensors: official kits plus India-assembled DIY open-hardware units, validated against reference instruments. They measure PM2.5 and PM10. The other pollutants (NO2, SO2, CO, O3) come from CAMS via Open-Meteo, and zones without a working ground sensor use Open-Meteo for everything.
+- Breathe reports two AQI standards side by side: US EPA AQI and the Indian National AQI (NAQI, CPCB).
+- License: MIT.
+- Network size changes as sensors are added. As of 2026-10-24: 21 ground sensors, 25 zones tracked, 12 cities with ground sensors, 13 zones on satellite data only. For current numbers use https://api.breatheoss.app/zones and https://api.breatheoss.app/sensor-info rather than these figures.
+
+## Links
+
+- [Web app](https://breatheoss.app): live AQI dashboard and map
+- [About & philosophy](https://about.breatheoss.app): this project's mission, methodology and team
+- [Android (Google Play)](https://play.google.com/store/apps/details?id=com.sidharthify.breathe)
+- [Android APK (GitHub releases)](https://github.com/breathe-OSS/breathe/releases)
+- [iOS, iPadOS and macOS (App Store)](https://apps.apple.com/us/app/breathe-aqi-for-jk-ladakh/id6761560112)
+- [Discord community](https://discord.breatheoss.app)
+- [GitHub organisation](https://github.com/breathe-OSS)
+- [Origin and technical deep-dive blog post](https://sidharthify.tech/blogs/blog-10-2-26/)
+- Contact: contact@breatheoss.app
+
+## Why it exists
+
+Publicly available AQI data for Jammu, Kashmir and Ladakh is unreliable. There are only 3 government CAAQMS ground stations in all of J&K. The JKPCB publishes air quality only as monthly averages with no explanation of how they are derived. Other platforms fill the gap with satellite estimates or interpolated models that have no ground validation, and none of that data is open. Breathe was built to give people accurate, immediate and verifiable readings of the air they actually breathe, including short-term spikes.
+
+## How the AQI is calculated
+
+1. Data acquisition: AirGradient ground sensors are used first. If a sensor is offline, reporting stale data, or shows an unrealistic spike, that zone automatically falls back to satellite modelling (Open-Meteo / CAMS).
+2. Multi-sensor averaging: when a city has several sensors, their readings are averaged before the AQI formula is applied. Erratic sensors are flagged and excluded through a grace-period mechanism.
+3. Sub-index calculation: each pollutant (PM2.5, PM10, NO2, SO2, CO, O3) gets its own sub-index from the standard linear breakpoint formula used by both US EPA and CPCB, evaluated against each standard's own breakpoint table. Values are capped at 500.
+4. Final AQI: the AQI is the highest sub-index, not an average. The pollutant producing it is reported as the main pollutant. Both NAQI and US EPA AQI are computed and returned.
+5. Two time windows: a live AQI from instantaneous readings, for tracking spikes, and a 24-hour rolling average AQI, as the CPCB and EPA rules specify for official reporting. Every API response includes both, plus saved historical data.
+
+## Coverage (as of 2026-10-24)
+
+- Zones with ground sensors (12): Bandipora, Doda, Ganderbal, Jammu, Kargil, Kathua, Leh, Rajouri, Reasi, Samba, Srinagar, Udhampur
+- Zones on satellite data only (13): Anantnag, Baramulla, Handwara, Katra, Kishtwar, Kulgam, Kupwara, Pahalgam, Poonch, Pulwama, Ramban, Shopian, Sopore
+- Srinagar has the most sensors (6), then Jammu (4) and Rajouri (2).
+
+Anyone with stable power and internet can host a sensor at home, in a shop or on a rooftop. Contact contact@breatheoss.app or join the Discord.
+
+## Apps and clients
+
+All clients use the same backend API and the same sensor network.
+
+- Android: Kotlin + Jetpack Compose. Material You dynamic theming, AMOLED dark mode, home screen widgets. Android 8.1+.
+- iOS: Swift + SwiftUI. Map overlay, 24-hour graph, home screen widgets. Runs on iPhone, iPad and Mac.
+- Web (breatheoss.app): TypeScript + Leaflet + Chart.js. Interactive map, light and dark themes, 24-hour trend, weather-tagged extended AQI history.
+- Discord bot: Python + discord.py. Slash commands, fuzzy location matching, 24-hour trend graphs, cigarette equivalence.
+- Desktop (Qt): C++17 + Qt 6 Widgets. Early work in progress / proof of concept.
+
+## API
+
+Public, no key needed. Base URL: https://api.breatheoss.app (interactive docs at https://api.breatheoss.app/docs)
+
+- `/zones`: list of all zones, with provider (airgradient or openmeteo), coordinates and zone type
+- `/sensor-info`: list of ground sensors with zone, model and installation date
+- `/aqi/zone/{zone_id}`: current AQI for one zone (for example `/aqi/zone/srinagar`)
+- `/historical-data/{location}/{time_range}/{interval}/{metrics}`: historical readings
+- `/weather-history/{zone_id}/{time_range}/{interval}`: weather context for a zone
+- `/seasonal/{zone_id}`: seasonal data
+
+## Source code
+
+- [breathe](https://github.com/breathe-OSS/breathe): Android app
+- [breathe-ios](https://github.com/breathe-OSS/breathe-ios): iOS app
+- [site](https://github.com/breathe-OSS/site): web app
+- [api](https://github.com/breathe-OSS/api): FastAPI backend
+- [bot](https://github.com/breathe-OSS/bot): Discord bot
+- [qt](https://github.com/breathe-OSS/qt): Qt 6 desktop app (proof of concept)
+- [insights](https://github.com/breathe-OSS/insights): AQI research project across J&K (work in progress)
+- [charter](https://github.com/breathe-OSS/charter): governance framework and community constitution
+- [about](https://github.com/breathe-OSS/about): this about page
+
+## Team
+
+- Founders: sidharthify (https://github.com/sidharthify, https://sidharthify.tech) and FlashWreck (https://github.com/FlashWreck)
+- Core team: FlashWreck, sidharthify, Lostless (https://github.com/Lostless1907), Altair Irfan, and one member whose name is withheld for privacy
+- Contributors: suveshmoza, SleeperOfSaturn, empirea9, sandeepxi, Rudhransh Damral, Historeel, and many anonymous contributors
+- Organisations credited as contributors: Zero Waste Ladakh, GCET Jammu (Government College of Engineering and Technology, Jammu), University of Kashmir
+
+## Philosophy
+
+The code is open so anyone can audit what Breathe claims. The methodology is documented so anyone can challenge it. The data is free so anyone can use it. The project's name and motto come from Pink Floyd: "Breathe, breathe in the air. Don't be afraid to care."

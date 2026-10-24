@@ -21,6 +21,65 @@
     content="Breathe is a free and open-source platform for accurate, transparent air quality monitoring across Jammu, Kashmir and Ladakh." />
   <meta name="twitter:image" content="https://about.breatheoss.app/assets/images/social_preview.png" />
 
+  <link rel="canonical" href="https://about.breatheoss.app/" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://breatheoss.app/#org",
+        "name": "breatheOSS",
+        "alternateName": ["Breathe", "BreatheOSS"],
+        "url": "https://breatheoss.app",
+        "logo": "https://about.breatheoss.app/assets/images/logo.png",
+        "description": "Free and open-source air quality network for Jammu & Kashmir and Ladakh, with its own AirGradient ground sensors, satellite fallback from CAMS via Open-Meteo, and real-time AQI in both US EPA and Indian NAQI standards.",
+        "email": "contact@breatheoss.app",
+        "nonprofitStatus": "Nonprofit",
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Jammu and Kashmir" },
+          { "@type": "AdministrativeArea", "name": "Ladakh" }
+        ],
+        "founder": [
+          { "@type": "Person", "name": "sidharthify", "url": "https://sidharthify.tech/", "sameAs": ["https://github.com/sidharthify"] },
+          { "@type": "Person", "name": "FlashWreck", "sameAs": ["https://github.com/FlashWreck"] }
+        ],
+        "sameAs": [
+          "https://github.com/breathe-OSS",
+          "https://about.breatheoss.app",
+          "https://discord.breatheoss.app",
+          "https://www.instagram.com/breatheoss/"
+        ]
+      },
+      {
+        "@type": "AboutPage",
+        "@id": "https://about.breatheoss.app/#page",
+        "url": "https://about.breatheoss.app/",
+        "name": "Breathe: About & Philosophy",
+        "about": { "@id": "https://breatheoss.app/#org" }
+      },
+      {
+        "@type": "MobileApplication",
+        "name": "Breathe for Android",
+        "operatingSystem": "Android 8.1+",
+        "applicationCategory": "WeatherApplication",
+        "url": "https://play.google.com/store/apps/details?id=com.sidharthify.breathe",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@id": "https://breatheoss.app/#org" }
+      },
+      {
+        "@type": "MobileApplication",
+        "name": "Breathe for iOS",
+        "operatingSystem": "iOS, iPadOS, macOS",
+        "applicationCategory": "WeatherApplication",
+        "url": "https://apps.apple.com/us/app/breathe-aqi-for-jk-ladakh/id6761560112",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@id": "https://breatheoss.app/#org" }
+      }
+    ]
+  }
+  </script>
+
   <link rel="icon" href="assets/images/web-icon.webp" type="image/webp" />
   <link rel="stylesheet" href="style.css" />
   <script>
@@ -200,7 +259,7 @@
 
         <div class="card stats-card" id="stats">
           <div class="stat-item">
-            <div class="stat-number" id="stat-sensors">16</div>
+            <div class="stat-number" id="stat-sensors">21</div>
             <div class="stat-label">Ground Sensors</div>
           </div>
           <div class="stat-item">
@@ -208,7 +267,7 @@
             <div class="stat-label">Zones Tracked</div>
           </div>
           <div class="stat-item">
-            <div class="stat-number" id="stat-cities">10</div>
+            <div class="stat-number" id="stat-cities">12</div>
             <div class="stat-label">Cities with Ground Truth</div>
           </div>
           <div class="stat-item">
@@ -307,7 +366,7 @@
 
         <div class="card" id="coverage">
           <h2 class="section-title" style="text-align: left; color: var(--primary);">Network Coverage</h2>
-          <p class="body-text" style="margin-bottom: 16px;">We currently track <strong id="cov-zones-count">25 zones</strong> across Jammu, Kashmir, and Ladakh. <strong id="cov-cities-count">10 cities</strong> have physical ground sensors deployed; the remaining <span id="cov-sat-count">15</span> receive satellite-modelled data from Open-Meteo CAMS.</p>
+          <p class="body-text" style="margin-bottom: 16px;">We currently track <strong id="cov-zones-count">25 zones</strong> across Jammu, Kashmir, and Ladakh. <strong id="cov-cities-count">12 cities</strong> have physical ground sensors deployed; the remaining <span id="cov-sat-count">13</span> receive satellite-modelled data from Open-Meteo CAMS.</p>
 
           <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px;">
             <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--on-surface-variant);">
@@ -321,22 +380,22 @@
           </div>
 
           <div id="coverage-grid" class="coverage-grid">
-            <div class="zone-pill ground"><span class="zone-dot"></span>Srinagar</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Jammu</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Leh</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Rajouri</div>
             <div class="zone-pill ground"><span class="zone-dot"></span>Bandipora</div>
             <div class="zone-pill ground"><span class="zone-dot"></span>Doda</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Udhampur</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Samba</div>
-            <div class="zone-pill ground"><span class="zone-dot"></span>Reasi</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Ganderbal</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Jammu</div>
             <div class="zone-pill ground"><span class="zone-dot"></span>Kargil</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Kathua</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Leh</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Rajouri</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Reasi</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Samba</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Srinagar</div>
+            <div class="zone-pill ground"><span class="zone-dot"></span>Udhampur</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Anantnag</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Baramulla</div>
-            <div class="zone-pill satellite"><span class="zone-dot"></span>Ganderbal</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Handwara</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Katra</div>
-            <div class="zone-pill satellite"><span class="zone-dot"></span>Kathua</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Kishtwar</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Kulgam</div>
             <div class="zone-pill satellite"><span class="zone-dot"></span>Kupwara</div>
