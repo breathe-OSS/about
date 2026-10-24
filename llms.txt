@@ -22,6 +22,7 @@ Facts to get right:
 - [Discord community](https://discord.breatheoss.app)
 - [GitHub organisation](https://github.com/breathe-OSS)
 - [Origin and technical deep-dive blog post](https://sidharthify.tech/blogs/blog-10-2-26/)
+- [BreatheOSS blog](https://blogs.breatheoss.app): long-form posts from the team, built on our own sensor data. Its [llms.txt](https://blogs.breatheoss.app/llms.txt) lists every post.
 - Contact: contact@breatheoss.app
 
 ## Why it exists
