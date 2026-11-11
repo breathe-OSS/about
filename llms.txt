@@ -43,7 +43,7 @@ Publicly available AQI data for Jammu, Kashmir and Ladakh is unreliable. There a
 - Zones on satellite data only (13): Anantnag, Baramulla, Handwara, Katra, Kishtwar, Kulgam, Kupwara, Pahalgam, Poonch, Pulwama, Ramban, Shopian, Sopore
 - Srinagar has the most sensors (6), then Jammu (4) and Rajouri (2).
 
-Anyone with stable power and internet can host a sensor at home, in a shop or on a rooftop. Contact contact@breatheoss.app or join the Discord.
+Anyone with stable power and internet can host a sensor at home, in a shop or on a rooftop. See Contributing below.
 
 ## Apps and clients
 
@@ -84,6 +84,15 @@ Public, no key needed. Base URL: https://api.breatheoss.app (interactive docs at
 - Core team: FlashWreck, sidharthify, Lostless (https://github.com/Lostless1907), Altair Irfan, and one member whose name is withheld for privacy
 - Contributors: suveshmoza, SleeperOfSaturn, empirea9, sandeepxi, Rudhransh Damral, Historeel, and many anonymous contributors
 - Organisations credited as contributors: Zero Waste Ladakh, GCET Jammu (Government College of Engineering and Technology, Jammu), University of Kashmir
+
+## Contributing
+
+Details are at https://about.breatheoss.app/#help and https://about.breatheoss.app/#contribute.
+
+- Hosting a sensor is the most useful contribution. It is free for the host. BreatheOSS sends an AirGradient outdoor monitor, helps set it up, sends power banks where power cuts are common, and helps fix problems. Contact contact@breatheoss.app, the Discord (https://discord.gg/aQmqeYrghM) or Instagram (@breatheoss).
+- Code: pull requests to the breathe-OSS repos are reviewed like the team's own. Keep code simple, make small signed off commits (git commit -s), never fake or smooth readings, and test on a real device or browser. Using an LLM is allowed, but the PR must name the model used and the author must understand every line.
+- Funding: donations go to sensors, power banks and hosting, over UPI to aadityagupta3370@oksbi or 9149692194@omni. Email contact@breatheoss.app for anything larger than a one-off donation.
+- Promotion and collaborations: DM @breatheoss on Instagram.
 
 ## Philosophy
 
