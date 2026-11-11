@@ -175,6 +175,25 @@ async function fetchLiveNetworkStats(): Promise<void> {
   }
 }
 
+function initCopyButtons(): void {
+  document.querySelectorAll<HTMLButtonElement>('.upi-copy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+      } catch {
+        btn.textContent = 'Select it';
+      }
+      window.setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  });
+}
+
 function initMemberPopups(): void {
   const interactiveMembers = document.querySelectorAll<HTMLElement>(
     '.member-circle.redacted, .member-circle.anonymous-contributor'
@@ -239,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initLogoParallax();
   initMemberPopups();
+  initCopyButtons();
   fetchLiveNetworkStats();
 
   const initialId = window.location.hash.slice(1);
