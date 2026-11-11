@@ -1,86 +1,5 @@
-function lerp(a: number, b: number, t: number): number {
-  return a + (b - a) * t;
-}
-
-function clamp(v: number, min: number, max: number): number {
-  return Math.max(min, Math.min(max, v));
-}
-
-
-function initLogoParallax(): void {
-  const card = document.querySelector('.main-aqi-card') as HTMLElement;
-  const logo = document.getElementById('logo3d') as HTMLImageElement;
-  if (!card || !logo) return;
-
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateY = ((x - centerX) / centerX) * 15;
-    const rotateX = ((centerY - y) / centerY) * 15;
-
-    logo.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
-  });
-
-  card.addEventListener('mouseleave', () => {
-    logo.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
-  });
-}
-
-
-function initNavigation(): void {
-  const sidebarButtons = document.querySelectorAll('.nav-btn');
-  const bottomNavItems = document.querySelectorAll('.nav-item');
-
-  function setActive(id: string) {
-    sidebarButtons.forEach(btn => {
-      const target = (btn as HTMLButtonElement).getAttribute('onclick')?.match(/#(\w+)/)?.[1];
-      btn.classList.toggle('active', target === id);
-    });
-
-    bottomNavItems.forEach(item => {
-      const target = (item as HTMLButtonElement).getAttribute('onclick')?.match(/#(\w+)/)?.[1];
-      item.classList.toggle('active', target === id);
-    });
-  }
-
-  window.addEventListener('hashchange', () => {
-    const id = window.location.hash.slice(1);
-    if (id) setActive(id);
-  });
-
-  // Highlight based on scroll
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        setActive(entry.target.id);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  document.querySelectorAll('.card[id]').forEach(card => observer.observe(card));
-}
-
-function initThemeToggle(): void {
-  const toggleBtn = document.getElementById('theme-toggle-btn');
-  if (!toggleBtn) return;
-
-  toggleBtn.addEventListener('click', () => {
-    const root = document.documentElement;
-    const currentTheme = root.getAttribute('data-theme') || 'dark';
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-
-    root.classList.add('theme-changing');
-    window.setTimeout(() => root.classList.remove('theme-changing'), 260);
-
-    root.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-  });
-}
+const API_BASE = 'https://api.breatheoss.app';
+const APP_BASE = 'https://breatheoss.app';
 
 interface ZoneItem {
   id: string;
@@ -96,83 +15,288 @@ interface SensorInfoResponse {
   sensors: unknown[];
 }
 
-async function fetchLiveNetworkStats(): Promise<void> {
-  const API_BASE = 'https://api.breatheoss.app';
+interface ZoneReading {
+  zone_id: string;
+  us_aqi?: number;
+  aqi: number;
+}
 
-  try {
-    const [zonesRes, sensorsRes] = await Promise.all([
-      fetch(`${API_BASE}/zones`).catch(() => null),
-      fetch(`${API_BASE}/sensor-info`).catch(() => null),
-    ]);
+interface LiveEntry {
+  zone: ZoneItem;
+  aqi: number;
+}
 
-    if (zonesRes && zonesRes.ok) {
-      const zonesData = (await zonesRes.json()) as ZonesResponse;
-      if (zonesData && Array.isArray(zonesData.zones)) {
-        const totalZones = zonesData.zones.length;
-        const groundCities = zonesData.zones.filter(z => z.provider === 'airgradient').length;
-        const satCities = totalZones - groundCities;
+const FEATURED_ZONES = ['srinagar', 'jammu_city', 'leh'];
 
-        const statZones = document.getElementById('stat-zones');
-        if (statZones && totalZones > 0) {
-          statZones.textContent = totalZones.toString();
-        }
+let liveEntries: LiveEntry[] = [];
 
-        const statCities = document.getElementById('stat-cities');
-        if (statCities && groundCities > 0) {
-          statCities.textContent = groundCities.toString();
-        }
-
-        const covZones = document.getElementById('cov-zones-count');
-        if (covZones && totalZones > 0) {
-          covZones.textContent = `${totalZones} zones`;
-        }
-        const covCities = document.getElementById('cov-cities-count');
-        if (covCities && groundCities > 0) {
-          covCities.textContent = `${groundCities} cities`;
-        }
-        const covSat = document.getElementById('cov-sat-count');
-        if (covSat && satCities >= 0) {
-          covSat.textContent = satCities.toString();
-        }
-
-        const coverageGrid = document.getElementById('coverage-grid');
-        if (coverageGrid && zonesData.zones.length > 0) {
-          const sortedZones = [...zonesData.zones].sort((a, b) => {
-            const aGround = a.provider === 'airgradient' ? 0 : 1;
-            const bGround = b.provider === 'airgradient' ? 0 : 1;
-            if (aGround !== bGround) return aGround - bGround;
-            return a.name.localeCompare(b.name);
-          });
-
-          const fragment = document.createDocumentFragment();
-          sortedZones.forEach(z => {
-            const isGround = z.provider === 'airgradient';
-            const pill = document.createElement('div');
-            pill.className = `zone-pill ${isGround ? 'ground' : 'satellite'}`;
-            const dot = document.createElement('span');
-            dot.className = 'zone-dot';
-            pill.appendChild(dot);
-            pill.appendChild(document.createTextNode(z.name));
-            fragment.appendChild(pill);
-          });
-
-          coverageGrid.replaceChildren(fragment);
-        }
-      }
-    }
-
-    if (sensorsRes && sensorsRes.ok) {
-      const sensorsData = (await sensorsRes.json()) as SensorInfoResponse;
-      if (sensorsData && Array.isArray(sensorsData.sensors)) {
-        const sensorCount = sensorsData.sensors.length;
-        const statSensors = document.getElementById('stat-sensors');
-        if (statSensors && sensorCount > 0) {
-          statSensors.textContent = sensorCount.toString();
-        }
-      }
-    }
-  } catch {
+function initThemeToggle(): void {
+  const toggleBtn = document.getElementById('theme-toggle-btn');
+  if (!toggleBtn) {
+    return;
   }
+
+  toggleBtn.addEventListener('click', () => {
+    const root = document.documentElement;
+    const currentTheme = root.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    root.classList.add('theme-changing');
+    window.setTimeout(() => root.classList.remove('theme-changing'), 550);
+
+    root.setAttribute('data-theme', newTheme);
+    try {
+      localStorage.setItem('theme', newTheme);
+    } catch {
+      return;
+    }
+    renderLive();
+  });
+}
+
+function initTopbar(): void {
+  const bar = document.getElementById('topbar');
+  if (!bar) {
+    return;
+  }
+  const update = () => {
+    bar.classList.toggle('scrolled', window.scrollY > 8);
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+function initSectionHighlight(): void {
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.topnav a'));
+  const sections = links
+    .map((link) => document.querySelector<HTMLElement>(link.getAttribute('href') || ''))
+    .filter((el): el is HTMLElement => el !== null);
+  if (sections.length === 0) {
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+        const id = `#${entry.target.id}`;
+        links.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === id);
+        });
+      });
+    },
+    { rootMargin: '-45% 0px -50% 0px' }
+  );
+  sections.forEach((section) => observer.observe(section));
+}
+
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function usBand(aqi: number): { label: string; token: string; darkText: boolean } {
+  if (aqi <= 50) {
+    return { label: 'Good', token: '--us-aqi-good', darkText: true };
+  }
+  if (aqi <= 100) {
+    return { label: 'Moderate', token: '--us-aqi-moderate', darkText: true };
+  }
+  if (aqi <= 150) {
+    return { label: 'Unhealthy for sensitive groups', token: '--us-aqi-sensitive', darkText: true };
+  }
+  if (aqi <= 200) {
+    return { label: 'Unhealthy', token: '--us-aqi-unhealthy', darkText: false };
+  }
+  if (aqi <= 300) {
+    return { label: 'Very unhealthy', token: '--us-aqi-very-unhealthy', darkText: false };
+  }
+  return { label: 'Hazardous', token: '--us-aqi-hazardous', darkText: false };
+}
+
+function renderLive(): void {
+  const list = document.getElementById('live-list');
+  if (!list || liveEntries.length === 0) {
+    return;
+  }
+
+  const rows = liveEntries.map((entry) => {
+    const band = usBand(entry.aqi);
+    const color = cssVar(band.token);
+    const source = entry.zone.provider === 'airgradient' ? 'Ground sensors' : 'Satellite model';
+    const item = document.createElement('li');
+    const link = document.createElement('a');
+    link.className = 'live-row';
+    link.href = `${APP_BASE}/zone/${encodeURIComponent(entry.zone.id)}`;
+    link.target = '_blank';
+    link.rel = 'noopener';
+    link.setAttribute('aria-label', `${entry.zone.name}, US AQI ${entry.aqi}, ${band.label}`);
+
+    const zone = document.createElement('div');
+    zone.className = 'live-zone';
+    const name = document.createElement('div');
+    name.className = 'live-name';
+    name.textContent = entry.zone.name;
+    const meta = document.createElement('div');
+    meta.className = 'live-meta';
+    const tag = document.createElement('span');
+    tag.className = 'tag';
+    tag.style.color = color;
+    tag.textContent = band.label;
+    meta.append(tag, document.createTextNode(` · ${source}`));
+    zone.append(name, meta);
+
+    const pill = document.createElement('div');
+    pill.className = 'live-aqi';
+    pill.style.background = color;
+    pill.style.color = band.darkText ? '#1a1c22' : '#ffffff';
+    pill.textContent = String(entry.aqi);
+
+    link.append(zone, pill);
+    item.append(link);
+    return item;
+  });
+
+  list.replaceChildren(...rows);
+}
+
+function pickLiveEntries(zones: ZoneItem[], readings: ZoneReading[]): LiveEntry[] {
+  const byId: { [id: string]: number } = {};
+  readings.forEach((reading) => {
+    const value = reading.us_aqi || reading.aqi;
+    if (typeof value === 'number' && value > 0) {
+      byId[reading.zone_id] = value;
+    }
+  });
+
+  const entries: LiveEntry[] = [];
+  FEATURED_ZONES.forEach((id) => {
+    const zone = zones.find((z) => z.id === id);
+    if (zone && byId[id] !== undefined) {
+      entries.push({ zone, aqi: byId[id] });
+    }
+  });
+
+  let worst: LiveEntry | null = null;
+  zones.forEach((zone) => {
+    const value = byId[zone.id];
+    if (value === undefined || FEATURED_ZONES.includes(zone.id)) {
+      return;
+    }
+    if (!worst || value > worst.aqi) {
+      worst = { zone, aqi: value };
+    }
+  });
+  if (worst) {
+    entries.push(worst);
+  }
+  return entries;
+}
+
+async function loadLiveReadings(zones: ZoneItem[]): Promise<void> {
+  const foot = document.getElementById('live-foot');
+  try {
+    const ids = zones.map((z) => encodeURIComponent(z.id)).join(',');
+    const res = await fetch(`${API_BASE}/aqi/zones?ids=${ids}`);
+    if (!res.ok) {
+      throw new Error(String(res.status));
+    }
+    const data = (await res.json()) as { zones: ZoneReading[] };
+    liveEntries = pickLiveEntries(zones, data.zones || []);
+    if (liveEntries.length === 0) {
+      throw new Error('empty');
+    }
+    renderLive();
+  } catch {
+    const list = document.getElementById('live-list');
+    list?.replaceChildren();
+    if (foot) {
+      foot.textContent = "Couldn't load live readings right now. Open the app to see them.";
+    }
+  }
+}
+
+function renderNetwork(zones: ZoneItem[]): void {
+  const total = zones.length;
+  const ground = zones.filter((z) => z.provider === 'airgradient').length;
+  const satellite = total - ground;
+
+  const setText = (id: string, text: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.textContent = text;
+    }
+  };
+
+  if (total > 0) {
+    setText('stat-zones', String(total));
+    setText('cov-zones-count', `${total} zones`);
+  }
+  if (ground > 0) {
+    setText('stat-cities', String(ground));
+    setText('cov-cities-count', `${ground} cities`);
+  }
+  setText('cov-sat-count', String(satellite));
+
+  const grid = document.getElementById('coverage-grid');
+  if (!grid || total === 0) {
+    return;
+  }
+  const sorted = [...zones].sort((a, b) => {
+    const aGround = a.provider === 'airgradient' ? 0 : 1;
+    const bGround = b.provider === 'airgradient' ? 0 : 1;
+    if (aGround !== bGround) {
+      return aGround - bGround;
+    }
+    return a.name.localeCompare(b.name);
+  });
+  const pills = sorted.map((zone) => {
+    const pill = document.createElement('div');
+    pill.className = `zone-pill ${zone.provider === 'airgradient' ? 'ground' : 'satellite'}`;
+    const dot = document.createElement('span');
+    dot.className = 'zone-dot';
+    pill.append(dot, document.createTextNode(zone.name));
+    return pill;
+  });
+  grid.replaceChildren(...pills);
+}
+
+async function loadNetwork(): Promise<void> {
+  const [zonesRes, sensorsRes] = await Promise.all([
+    fetch(`${API_BASE}/zones`).catch(() => null),
+    fetch(`${API_BASE}/sensor-info`).catch(() => null),
+  ]);
+
+  let zones: ZoneItem[] = [];
+  if (zonesRes && zonesRes.ok) {
+    const data = (await zonesRes.json()) as ZonesResponse;
+    if (data && Array.isArray(data.zones)) {
+      zones = data.zones;
+    }
+  }
+
+  if (sensorsRes && sensorsRes.ok) {
+    const data = (await sensorsRes.json()) as SensorInfoResponse;
+    if (data && Array.isArray(data.sensors) && data.sensors.length > 0) {
+      const el = document.getElementById('stat-sensors');
+      if (el) {
+        el.textContent = String(data.sensors.length);
+      }
+    }
+  }
+
+  if (zones.length === 0) {
+    const foot = document.getElementById('live-foot');
+    document.getElementById('live-list')?.replaceChildren();
+    if (foot) {
+      foot.textContent = "Couldn't load live readings right now. Open the app to see them.";
+    }
+    return;
+  }
+
+  renderNetwork(zones);
+  await loadLiveReadings(zones);
 }
 
 function initCopyButtons(): void {
@@ -195,80 +319,43 @@ function initCopyButtons(): void {
 }
 
 function initMemberPopups(): void {
-  const interactiveMembers = document.querySelectorAll<HTMLElement>(
+  const members = document.querySelectorAll<HTMLElement>(
     '.member-circle.redacted, .member-circle.anonymous-contributor'
   );
 
-  function ensureTooltipWithinBounds(circle: HTMLElement): void {
-    const tooltip = circle.querySelector<HTMLElement>('.member-tooltip, .anonymous-tooltip');
-    if (!tooltip) return;
-
-    const rect = tooltip.getBoundingClientRect();
-    const pad = 12;
-    const vw = document.documentElement.clientWidth || window.innerWidth;
-
-    if (rect.right > vw - pad) {
-      const overflow = rect.right - (vw - pad);
-      const currentRight = parseFloat(getComputedStyle(tooltip).right) || 0;
-      tooltip.style.right = `${currentRight + overflow}px`;
+  const toggle = (btn: HTMLElement) => {
+    const wasActive = btn.classList.contains('active');
+    members.forEach((el) => el.classList.remove('active'));
+    if (!wasActive) {
+      btn.classList.add('active');
     }
-  }
+  };
 
-  interactiveMembers.forEach((btn) => {
+  members.forEach((btn) => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      const wasActive = btn.classList.contains('active');
-      interactiveMembers.forEach((el) => el.classList.remove('active'));
-      if (!wasActive) {
-        btn.classList.add('active');
-        ensureTooltipWithinBounds(btn);
-      }
+      toggle(btn);
     });
-
-    btn.addEventListener('mouseenter', () => {
-      ensureTooltipWithinBounds(btn);
-    });
-
     btn.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        const wasActive = btn.classList.contains('active');
-        interactiveMembers.forEach((el) => el.classList.remove('active'));
-        if (!wasActive) {
-          btn.classList.add('active');
-          ensureTooltipWithinBounds(btn);
-        }
+        toggle(btn);
       } else if (e.key === 'Escape') {
         btn.classList.remove('active');
       }
     });
   });
 
-  document.addEventListener('click', (e) => {
-    interactiveMembers.forEach((btn) => {
-      if (!btn.contains(e.target as Node)) {
-        btn.classList.remove('active');
-      }
-    });
+  document.addEventListener('click', () => {
+    members.forEach((btn) => btn.classList.remove('active'));
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
-  initNavigation();
-  initLogoParallax();
-  initMemberPopups();
+  initTopbar();
+  initSectionHighlight();
   initCopyButtons();
-  fetchLiveNetworkStats();
-
-  const initialId = window.location.hash.slice(1);
-  if (initialId) {
-    const el = document.getElementById(initialId);
-    if (el) {
-      setTimeout(() => {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
-  }
+  initMemberPopups();
+  loadNetwork();
 });
-
