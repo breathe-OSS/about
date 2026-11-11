@@ -57,7 +57,7 @@ All clients use the same backend API and the same sensor network.
 
 ## API
 
-Public, no key needed. Base URL: https://api.breatheoss.app (interactive docs at https://api.breatheoss.app/docs)
+Public, no key needed. Base URL: https://api.breatheoss.app (full docs at https://docs.breatheoss.app, interactive reference at https://api.breatheoss.app/docs)
 
 - `/zones`: list of all zones, with provider (airgradient or openmeteo), coordinates and zone type
 - `/sensor-info`: list of ground sensors with zone, model and installation date
