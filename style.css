@@ -907,33 +907,35 @@ a.live-row:hover {
   flex-shrink: 0;
   transition: transform var(--motion-shape) var(--motion-spring-spatial);
 }
-details[open] > summary .chevron {
+details[open]:not(.closing) > summary .chevron {
   transform: rotate(180deg);
+}
+.expander-body {
+  overflow: hidden;
 }
 .method-steps {
   list-style: none;
   counter-reset: method;
-  margin: 0;
-  padding: 0 24px 8px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  margin: 0 24px;
+  padding: 0;
+  border-top: 1px solid var(--outline-variant);
 }
 .method-steps li {
   counter-increment: method;
   position: relative;
-  padding: 16px 16px 16px 60px;
-  border-radius: 20px;
-  background: var(--surface-container-high);
+  padding: 20px 0 20px 52px;
+}
+.method-steps li + li {
+  border-top: 1px solid var(--outline-variant);
 }
 .method-steps li::before {
   content: counter(method);
   position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  left: 0;
+  top: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 16px;
   background: var(--primary-container);
   color: var(--primary);
   display: flex;
@@ -943,7 +945,7 @@ details[open] > summary .chevron {
   font-weight: 700;
 }
 .method-steps h4 {
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 4px;
 }
 .method-steps p {
@@ -952,18 +954,21 @@ details[open] > summary .chevron {
   color: var(--on-surface-variant);
 }
 .formula {
-  display: block;
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-radius: var(--shape-corner-medium);
-  background: var(--surface-container);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 13px;
+  margin: 18px 0 14px;
   overflow-x: auto;
-  white-space: nowrap;
+  color: var(--on-surface);
+}
+.formula math {
+  font-family: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math;
+  font-size: 1.35em;
+}
+.formula-key var {
+  font-family: 'STIX Two Math', 'Cambria Math', 'Latin Modern Math', math;
+  font-size: 1.1em;
+  color: var(--on-surface);
 }
 .method .text-link {
-  margin: 8px 24px 24px;
+  margin: 4px 24px 24px;
 }
 
 .coverage-card {
@@ -1091,85 +1096,42 @@ details[open] > summary .chevron {
   font-weight: 600;
 }
 
-#get-involved {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.help-card {
-  padding: 32px;
-  border-color: color-mix(in srgb, var(--primary) 40%, transparent);
-  background:
-    radial-gradient(ellipse at top right, color-mix(in srgb, var(--primary) 16%, transparent) 0%, transparent 60%),
-    linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
-}
-.help-card .eyebrow {
-  display: inline-flex;
-  margin: 0;
-  padding: 6px 12px;
-  border-radius: var(--shape-corner-small);
-  background: var(--primary);
-  color: var(--on-primary);
-  font-size: 11px;
-  letter-spacing: 0.8px;
-}
-.help-title {
-  margin: 16px 0 10px;
-  font-size: clamp(28px, 4vw, 38px);
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-.help-lead {
-  max-width: 68ch;
-  margin-bottom: 24px;
-  font-size: 17px;
-  line-height: 1.65;
-  color: var(--on-surface-variant);
-}
-.help-steps {
+.host-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.help-step {
-  display: flex;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
-  align-items: flex-start;
-  padding: 18px;
-  border-radius: 24px;
-  background: var(--surface-container-high);
 }
-.help-step h3,
-.contribute-head h3 {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 4px;
+.host-step {
+  padding: 24px;
 }
-.help-step p {
+.host-step h3 {
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+.host-step p {
   font-size: 14px;
   line-height: 1.6;
   color: var(--on-surface-variant);
 }
-.help-step-icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 14px;
-  background: var(--primary-container);
-  color: var(--primary);
+.host-contact {
+  margin-top: 16px;
+  padding: 20px 24px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  background:
+    radial-gradient(ellipse at top right, color-mix(in srgb, var(--primary) 16%, transparent) 0%, transparent 65%),
+    linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
 }
-.help-step-icon svg {
-  width: 22px;
-  height: 22px;
-  fill: currentColor;
+.host-contact h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
 }
-.help-cta-text {
-  margin-bottom: 12px;
-  font-size: 15px;
+.host-contact p {
+  font-size: 14px;
   color: var(--on-surface-variant);
 }
 .link-row {
@@ -1178,72 +1140,54 @@ details[open] > summary .chevron {
   gap: 8px;
 }
 
-#contribute {
-  padding: 32px;
-}
-.card-title {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
 .contribute-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 16px;
 }
-.contribute-block {
-  padding: 20px;
-  border-radius: 24px;
-  background: var(--surface-container-high);
+.contribute-card {
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 12px;
 }
 .contribute-code {
   grid-row: span 2;
 }
-.contribute-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
-}
-.contribute-head h3 {
-  margin: 0;
+.contribute-card h3 {
   font-size: 18px;
 }
-.contribute-block p {
-  margin-bottom: 10px;
+.contribute-card > p {
   font-size: 14px;
   line-height: 1.6;
   color: var(--on-surface-variant);
 }
-.contribute-block p a {
+.contribute-card > p a {
   font-weight: 600;
   text-decoration: none;
 }
+.contribute-card .link-row {
+  margin-top: auto;
+}
 .rules {
   list-style: none;
-  margin: 4px 0 16px;
+  margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  border-top: 1px solid var(--outline-variant);
 }
 .rules li {
   position: relative;
-  padding: 12px 14px 12px 40px;
-  border-radius: 16px;
-  background: var(--surface-container);
+  padding: 14px 0 14px 28px;
   font-size: 14px;
-  line-height: 1.55;
+  line-height: 1.6;
   color: var(--on-surface-variant);
+  border-bottom: 1px solid var(--outline-variant);
 }
 .rules li::before {
   content: '';
   position: absolute;
-  left: 17px;
-  top: 19px;
+  left: 4px;
+  top: 21px;
   width: 9px;
   height: 9px;
   border-radius: 3px;
@@ -1265,45 +1209,46 @@ details[open] > summary .chevron {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: 4px 0 12px;
 }
 .upi-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 6px 6px 16px;
-  border-radius: 26px;
-  background: var(--surface-container);
-  border: 1px solid var(--outline-variant);
+  height: 52px;
+  padding: 0 6px 0 16px;
+  border-radius: var(--shape-corner-medium);
+  border: 1px solid var(--outline);
 }
 .upi-id {
   flex: 1;
   min-width: 0;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 500;
   color: var(--on-surface);
   text-decoration: none;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 .upi-copy {
   flex-shrink: 0;
-  height: 36px;
-  padding: 0 16px;
+  height: 40px;
+  padding: 0 18px;
   border: none;
-  border-radius: 18px;
-  background: var(--primary);
-  color: var(--on-primary);
+  border-radius: 20px;
+  background: var(--primary-container);
+  color: var(--primary);
   font: inherit;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
   cursor: pointer;
-  transition: border-radius var(--motion-shape) var(--motion-spring-spatial);
+  transition:
+    background-color var(--motion-press) var(--motion-easing-standard),
+    border-radius var(--motion-shape) var(--motion-spring-spatial);
 }
 .upi-copy:hover {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 .upi-copy.copied {
   background: var(--aqi-good);
@@ -1362,33 +1307,32 @@ details[open] > summary .chevron {
   color: var(--on-surface-variant);
 }
 
-.people-card {
-  padding: 32px;
+.people-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 16px;
 }
 .people-group {
-  padding: 20px;
-  border-radius: 24px;
-  background: var(--surface-container-high);
-  margin-top: 12px;
+  padding: 24px;
 }
 .people-founders {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
   background:
-    radial-gradient(ellipse at top left, color-mix(in srgb, var(--primary) 18%, transparent) 0%, transparent 65%),
-    var(--primary-container);
-  border: 1px solid color-mix(in srgb, var(--primary) 25%, transparent);
+    radial-gradient(ellipse at top right, color-mix(in srgb, var(--primary) 16%, transparent) 0%, transparent 65%),
+    linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
+}
+.people-contributors {
+  grid-column: 1 / -1;
 }
 .people-label {
-  margin: 0 0 16px;
-  font-size: 13px;
+  margin: 0 0 18px;
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--primary);
 }
 .people-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
-  gap: 16px 8px;
+  gap: 18px 8px;
 }
 .person {
   display: flex;
@@ -1426,11 +1370,6 @@ details[open] > summary .chevron {
     border-radius var(--motion-shape) var(--motion-spring-spatial),
     transform var(--motion-shape) var(--motion-spring-spatial),
     box-shadow var(--motion-press) var(--motion-easing-standard);
-}
-.people-founders .member-circle {
-  width: 80px;
-  height: 80px;
-  border-radius: 40px;
 }
 .member-circle img {
   width: 100%;
@@ -1510,21 +1449,7 @@ details[open] > summary .chevron {
   transform: translateX(-50%) translateY(0);
 }
 .people-join {
-  display: inline-block;
-  margin-top: 16px;
-  font-size: 14px;
-  font-weight: 600;
-  text-decoration: none;
-}
-.people-join:hover {
-  text-decoration: underline;
-}
-.people-card .link-row a {
-  font-size: 14px;
-}
-.people-card .link-row svg {
-  width: 16px;
-  height: 16px;
+  margin-top: 20px;
 }
 
 .footer {
@@ -1628,8 +1553,16 @@ details[open] > summary .chevron {
   }
   .steps,
   .platform-grid,
-  .principles {
+  .principles,
+  .host-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .contribute-grid,
+  .people-layout {
+    grid-template-columns: 1fr;
+  }
+  .contribute-code {
+    grid-row: auto;
   }
   .stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1687,20 +1620,16 @@ details[open] > summary .chevron {
   .platform-grid,
   .principles,
   .compare,
-  .help-steps,
-  .contribute-grid {
+  .host-grid {
     grid-template-columns: 1fr;
   }
-  .contribute-code {
-    grid-row: auto;
-  }
-  .help-card,
-  #contribute,
-  .people-card {
+  .host-step,
+  .contribute-card,
+  .people-group {
     padding: 20px;
   }
-  .contribute-block {
-    padding: 16px;
+  .host-contact .link-row a {
+    flex: 1 1 auto;
   }
   .coverage-card {
     padding: 16px;
@@ -1717,13 +1646,16 @@ details[open] > summary .chevron {
     padding: 18px 20px;
   }
   .method-steps {
-    padding: 0 12px 8px;
+    margin: 0 20px;
+  }
+  .method-steps li {
+    padding-left: 44px;
+  }
+  .formula math {
+    font-size: 1.1em;
   }
   .method .text-link {
-    margin: 8px 20px 20px;
-  }
-  .people-group {
-    padding: 16px;
+    margin: 4px 20px 20px;
   }
   .people-grid {
     grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
@@ -1732,11 +1664,6 @@ details[open] > summary .chevron {
     width: 56px;
     height: 56px;
     border-radius: 28px;
-  }
-  .people-founders .member-circle {
-    width: 68px;
-    height: 68px;
-    border-radius: 34px;
   }
   .member-tooltip,
   .anonymous-tooltip {

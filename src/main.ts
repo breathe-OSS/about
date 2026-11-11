@@ -299,6 +299,79 @@ async function loadNetwork(): Promise<void> {
   await loadLiveReadings(zones);
 }
 
+function motionMs(token: string, fallback: number): number {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return 0;
+  }
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+  const value = parseFloat(raw);
+  if (isNaN(value)) {
+    return fallback;
+  }
+  if (raw.endsWith('ms')) {
+    return value;
+  }
+  return value * 1000;
+}
+
+function initExpanders(): void {
+  document.querySelectorAll<HTMLDetailsElement>('details.expander').forEach((details) => {
+    const summary = details.querySelector('summary');
+    const body = details.querySelector<HTMLElement>('.expander-body');
+    if (!summary || !body) {
+      return;
+    }
+    let running: Animation | null = null;
+
+    summary.addEventListener('click', (e) => {
+      e.preventDefault();
+      const duration = motionMs('--motion-shape', 350);
+      const closing = details.open && !details.classList.contains('closing');
+      const from = body.getBoundingClientRect().height;
+      running?.cancel();
+
+      if (closing) {
+        details.classList.add('closing');
+        if (duration === 0) {
+          details.open = false;
+          details.classList.remove('closing');
+          return;
+        }
+        running = body.animate(
+          [
+            { height: `${from}px`, opacity: 1 },
+            { height: '0px', opacity: 0 },
+          ],
+          { duration: duration * 0.8, easing: 'cubic-bezier(0.3, 0, 0.8, 0.15)' }
+        );
+        running.onfinish = () => {
+          details.open = false;
+          details.classList.remove('closing');
+          running = null;
+        };
+        return;
+      }
+
+      details.classList.remove('closing');
+      details.open = true;
+      if (duration === 0) {
+        return;
+      }
+      const to = body.getBoundingClientRect().height;
+      running = body.animate(
+        [
+          { height: `${from === to ? 0 : from}px`, opacity: 0 },
+          { height: `${to}px`, opacity: 1 },
+        ],
+        { duration, easing: 'cubic-bezier(0.05, 0.7, 0.1, 1)' }
+      );
+      running.onfinish = () => {
+        running = null;
+      };
+    });
+  });
+}
+
 function initCopyButtons(): void {
   document.querySelectorAll<HTMLButtonElement>('.upi-copy').forEach((btn) => {
     btn.addEventListener('click', async () => {
@@ -355,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeToggle();
   initTopbar();
   initSectionHighlight();
+  initExpanders();
   initCopyButtons();
   initMemberPopups();
   loadNetwork();
