@@ -1,22 +1,42 @@
 :root {
-  --background: #0f1216;
+  color-scheme: dark;
+  --primary: #aac7ff;
+  --on-primary: #0a305f;
+  --primary-container: #284777;
+  --on-primary-container: #d6e3ff;
+  --secondary: #bec6dc;
+  --on-secondary: #283141;
+  --secondary-container: #3e4759;
+  --on-secondary-container: #dae2f9;
+  --tertiary: #ddbce0;
+  --on-tertiary: #3f2844;
+  --tertiary-container: #573e5c;
+  --on-tertiary-container: #fad8fd;
+  --error: #ffb4ab;
+  --on-error: #690005;
   --error-container: #93000a;
   --on-error-container: #ffdad6;
-  --surface: #1a1c22;
-  --surface-variant: #252830;
-  --surface-container: #1e2024;
+  --background: #111318;
+  --surface-dim: #111318;
+  --surface-bright: #37393e;
+  --surface-container-lowest: #0c0e13;
+  --surface-container-low: #191c20;
+  --surface-container: #1d2024;
   --surface-container-high: #282a2f;
-  --surface-container-highest: #333538;
-  --primary: #a8c7fa;
-  --on-primary: #062e6f;
-  --primary-container: rgba(168, 199, 250, 0.12);
-  --secondary: #c3c7cf;
-  --tertiary: #e8b9d5;
+  --surface-container-highest: #33353a;
+  --surface: var(--surface-container);
+  --surface-variant: var(--surface-container-highest);
   --on-surface: #e2e2e9;
-  --on-surface-variant: #c4c7d0;
-  --outline: #44474f;
-  --outline-variant: #44474f80;
-  --nav-active-bg: rgba(168, 199, 250, 0.15);
+  --on-surface-variant: #c4c6d0;
+  --outline: #8e9099;
+  --outline-variant: #44474e;
+  --inverse-surface: #e2e2e9;
+  --inverse-on-surface: #2e3036;
+  --inverse-primary: #415f91;
+  --nav-active-bg: var(--secondary-container);
+  --shape-corner-large-increased: 20px;
+  --shape-corner-extra-large-increased: 32px;
+  --shape-corner-extra-extra-large: 48px;
   --scrim: rgba(0, 0, 0, 0.5);
   --aqi-good: #4ade80;
   --aqi-satisfactory: #a3e635;
@@ -184,24 +204,38 @@
   }
 }
 [data-theme='light'] {
-  --error-container: #ffdad6;
-  --on-error-container: #410002;
-  --background: #f8fafc;
-  --surface: #ffffff;
-  --surface-variant: #e2e8f0;
-  --surface-container: #f1f5f9;
-  --surface-container-high: #e2e8f0;
-  --surface-container-highest: #cbd5e1;
-  --primary: #1d4ed8;
+  color-scheme: light;
+  --primary: #415f91;
   --on-primary: #ffffff;
-  --primary-container: rgba(29, 78, 216, 0.12);
-  --secondary: #475569;
-  --tertiary: #7c3aed;
-  --on-surface: #0f172a;
-  --on-surface-variant: #475569;
-  --outline: #94a3b8;
-  --outline-variant: #94a3b880;
-  --nav-active-bg: rgba(29, 78, 216, 0.12);
+  --primary-container: #d6e3ff;
+  --on-primary-container: #284777;
+  --secondary: #565f71;
+  --on-secondary: #ffffff;
+  --secondary-container: #dae2f9;
+  --on-secondary-container: #3e4759;
+  --tertiary: #705575;
+  --on-tertiary: #ffffff;
+  --tertiary-container: #fad8fd;
+  --on-tertiary-container: #573e5c;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --error-container: #ffdad6;
+  --on-error-container: #93000a;
+  --background: #f9f9ff;
+  --surface-dim: #d9d9e0;
+  --surface-bright: #f9f9ff;
+  --surface-container-lowest: #ffffff;
+  --surface-container-low: #f3f3fa;
+  --surface-container: #ededf4;
+  --surface-container-high: #e7e8ee;
+  --surface-container-highest: #e2e2e9;
+  --on-surface: #191c20;
+  --on-surface-variant: #44474e;
+  --outline: #74777f;
+  --outline-variant: #c4c6d0;
+  --inverse-surface: #2e3036;
+  --inverse-on-surface: #f0f0f7;
+  --inverse-primary: #aac7ff;
   --scrim: rgba(0, 0, 0, 0.32);
   --us-aqi-good: #2f9e4a;
   --us-aqi-moderate: #e0b400;
@@ -304,6 +338,7 @@ sub {
   border: 1px solid transparent;
   transition:
     background-color var(--motion-press) var(--motion-easing-standard),
+    color var(--motion-press) var(--motion-easing-standard),
     border-radius var(--motion-shape) var(--motion-spring-spatial),
     transform var(--motion-squish) var(--motion-spring-squish);
 }
@@ -316,8 +351,8 @@ sub {
   border-radius: 12px;
 }
 .btn-tonal {
-  background: var(--primary-container);
-  color: var(--primary);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
 }
 .btn-tonal:hover {
   background: color-mix(in srgb, var(--primary) 20%, transparent);
@@ -325,8 +360,8 @@ sub {
 }
 .btn-outlined {
   background: transparent;
-  color: var(--primary);
-  border-color: var(--outline);
+  color: var(--on-surface-variant);
+  border-color: var(--outline-variant);
 }
 .btn-outlined:hover {
   background: var(--surface-variant);
@@ -336,6 +371,7 @@ sub {
 .btn-tonal:active,
 .btn-outlined:active {
   transform: scale(0.95);
+  border-radius: var(--shape-corner-small);
 }
 .btn-large {
   height: 52px;
@@ -345,6 +381,9 @@ sub {
 }
 .btn-large:hover {
   border-radius: 16px;
+}
+.btn-large:active {
+  border-radius: var(--shape-corner-large);
 }
 .btn-filled svg,
 .btn-tonal svg,
@@ -366,12 +405,17 @@ sub {
   justify-content: center;
   cursor: pointer;
   transition:
-    background var(--motion-press) var(--motion-easing-standard),
-    border-radius var(--motion-shape) var(--motion-spring-spatial);
+    background-color var(--motion-press) var(--motion-easing-standard),
+    color var(--motion-press) var(--motion-easing-standard),
+    border-radius var(--motion-shape) var(--motion-spring-spatial),
+    transform var(--motion-squish) var(--motion-spring-squish);
 }
 .icon-btn:hover {
   background: var(--surface-variant);
   border-radius: 12px;
+}
+.icon-btn:active {
+  border-radius: var(--shape-corner-small);
 }
 .theme-toggle-btn svg {
   width: 20px;
@@ -400,17 +444,8 @@ sub {
 }
 
 .card {
-  background: linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
-  border: 1px solid var(--outline-variant);
+  background: var(--surface-container);
   border-radius: var(--shape-corner-extra-large);
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.12),
-    0 1px 2px rgba(0, 0, 0, 0.08);
-}
-[data-theme='light'] .card {
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .topbar {
@@ -500,7 +535,6 @@ main {
   align-items: center;
   padding: 6px 14px;
   border-radius: var(--shape-corner-small);
-  border: 1px solid var(--outline-variant);
   background: var(--surface-container);
   color: var(--on-surface-variant);
   font-size: 13px;
@@ -689,7 +723,6 @@ a.live-row:hover {
   padding: 20px;
   border-radius: 24px;
   background: var(--surface-container);
-  border: 1px solid var(--outline-variant);
 }
 .stat-number {
   font-size: 36px;
@@ -751,7 +784,7 @@ a.live-row:hover {
   padding: 16px 20px;
   border-left: 4px solid var(--primary);
   border-radius: 0 var(--shape-corner-large) var(--shape-corner-large) 0;
-  background: var(--primary-container);
+  background: var(--secondary-container);
   color: var(--on-surface);
   font-weight: 500;
 }
@@ -793,8 +826,8 @@ a.live-row:hover {
   width: 52px;
   height: 52px;
   border-radius: 16px;
-  background: var(--primary-container);
-  color: var(--primary);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -936,8 +969,8 @@ details[open]:not(.closing) > summary .chevron {
   width: 32px;
   height: 32px;
   border-radius: 16px;
-  background: var(--primary-container);
-  color: var(--primary);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1026,7 +1059,7 @@ details[open]:not(.closing) > summary .chevron {
   margin-top: 20px;
   padding: 16px 16px 16px 20px;
   border-radius: 20px;
-  background: var(--primary-container);
+  background: var(--secondary-container);
 }
 .coverage-cta p {
   font-size: 15px;
@@ -1058,8 +1091,8 @@ details[open]:not(.closing) > summary .chevron {
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: var(--primary-container);
-  color: var(--primary);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1121,10 +1154,7 @@ details[open]:not(.closing) > summary .chevron {
   justify-content: space-between;
   gap: 16px 24px;
   flex-wrap: wrap;
-  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
-  background:
-    radial-gradient(ellipse at top right, color-mix(in srgb, var(--primary) 16%, transparent) 0%, transparent 65%),
-    linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
+  background: var(--surface-container);
 }
 .host-contact h3 {
   font-size: 18px;
@@ -1237,8 +1267,8 @@ details[open]:not(.closing) > summary .chevron {
   padding: 0 18px;
   border: none;
   border-radius: 20px;
-  background: var(--primary-container);
-  color: var(--primary);
+  background: var(--secondary-container);
+  color: var(--on-secondary-container);
   font: inherit;
   font-size: 14px;
   font-weight: 500;
@@ -1289,7 +1319,6 @@ details[open]:not(.closing) > summary .chevron {
 .faq {
   border-radius: 20px;
   background: var(--surface-container);
-  border: 1px solid var(--outline-variant);
   transition: border-radius var(--motion-shape) var(--motion-spring-spatial);
 }
 .faq[open] {
@@ -1316,10 +1345,7 @@ details[open]:not(.closing) > summary .chevron {
   padding: 24px;
 }
 .people-founders {
-  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
-  background:
-    radial-gradient(ellipse at top right, color-mix(in srgb, var(--primary) 16%, transparent) 0%, transparent 65%),
-    linear-gradient(135deg, var(--surface) 0%, var(--surface-container) 100%);
+  background: var(--surface-container);
 }
 .people-contributors {
   grid-column: 1 / -1;
@@ -1398,9 +1424,9 @@ details[open]:not(.closing) > summary .chevron {
 .member-circle.anonymous-contributor:focus-visible,
 .member-circle.anonymous-contributor.active {
   border-style: solid;
-  border-color: var(--primary);
+  border-color: var(--on-secondary-container);
   border-radius: 20px;
-  background: var(--primary-container);
+  background: var(--secondary-container);
   color: var(--primary);
   transform: scale(1.06);
   z-index: 20;
@@ -1421,7 +1447,6 @@ details[open]:not(.closing) > summary .chevron {
   transform: translateX(-50%) translateY(4px);
   background: var(--surface-container-highest);
   color: var(--on-surface);
-  border: 1px solid var(--outline-variant);
   padding: 8px 14px;
   border-radius: var(--shape-corner-medium);
   font-size: 12px;
@@ -1431,7 +1456,6 @@ details[open]:not(.closing) > summary .chevron {
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
   transition:
     opacity var(--motion-press) var(--motion-easing-standard),
     transform var(--motion-press) var(--motion-easing-standard),
@@ -1535,7 +1559,6 @@ details[open]:not(.closing) > summary .chevron {
   }
   .topnav a {
     flex-shrink: 0;
-    border: 1px solid var(--outline-variant);
   }
   html {
     scroll-padding-top: 128px;
