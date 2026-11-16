@@ -34,6 +34,7 @@
   --inverse-on-surface: #2e3036;
   --inverse-primary: #415f91;
   --nav-active-bg: var(--secondary-container);
+  --font-plain: 'Google Sans Flex', 'Roboto', system-ui, sans-serif;
   --shape-corner-large-increased: 20px;
   --shape-corner-extra-large-increased: 32px;
   --shape-corner-extra-extra-large: 48px;
@@ -259,7 +260,7 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--on-surface);
-  font-family: 'Roboto', system-ui, sans-serif;
+  font-family: var(--font-plain);
   font-size: 16px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -544,7 +545,7 @@ main {
   margin: 20px 0 16px;
   font-size: clamp(40px, 6vw, 64px);
   font-weight: 800;
-  letter-spacing: -1.5px;
+  letter-spacing: -0.5px;
   line-height: 1.05;
 }
 .lead {
