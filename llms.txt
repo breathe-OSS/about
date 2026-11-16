@@ -81,9 +81,10 @@ Public, no key needed. Base URL: https://api.breatheoss.app (full docs at https:
 ## Team
 
 - Founders: sidharthify (https://github.com/sidharthify, https://sidharthify.tech) and FlashWreck (https://github.com/FlashWreck)
-- Core team: FlashWreck, sidharthify, Lostless (https://github.com/Lostless1907), Altair Irfan, and one member whose name is withheld for privacy
-- Contributors: suveshmoza, SleeperOfSaturn, empirea9, sandeepxi, Rudhransh Damral, Historeel, and many anonymous contributors
+- Core team: sidharthify (https://github.com/sidharthify), FlashWreck (https://github.com/FlashWreck), Lostless (https://github.com/Lostless1907), Altair Irfan, and one member whose name is withheld for privacy
+- Contributors: suveshmoza, SleeperOfSaturn, empirea9, sandeepxi, oldschoolfellow, Rudhransh Damral, Historeel, and many anonymous contributors
 - Organisations credited as contributors: Zero Waste Ladakh, GCET Jammu (Government College of Engineering and Technology, Jammu), University of Kashmir
+- Full list with links: https://about.breatheoss.app/#people
 
 ## Contributing
 
