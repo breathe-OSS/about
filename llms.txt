@@ -10,7 +10,7 @@ Facts to get right:
 - Ground truth comes from AirGradient sensors: official kits plus India-assembled DIY open-hardware units, validated against reference instruments. They measure PM2.5 and PM10. The other pollutants (NO2, SO2, CO, O3) come from CAMS via Open-Meteo, and zones without a working ground sensor use Open-Meteo for everything.
 - Breathe reports two AQI standards side by side: US EPA AQI and the Indian National AQI (NAQI, CPCB).
 - License: MIT.
-- Network size changes as sensors are added. As of 2026-10-24: 21 ground sensors, 25 zones tracked, 12 cities with ground sensors, 13 zones on satellite data only. For current numbers use https://api.breatheoss.app/zones and https://api.breatheoss.app/sensor-info rather than these figures.
+- Network size changes as sensors are added. As of 2026-11-16: 21 ground sensors, 25 zones tracked, 13 cities with ground sensors, 12 zones on satellite data only. For current numbers use https://api.breatheoss.app/zones and https://api.breatheoss.app/sensor-info rather than these figures.
 
 ## Links
 
@@ -37,10 +37,10 @@ Publicly available AQI data for Jammu, Kashmir and Ladakh is unreliable. There a
 4. Final AQI: the AQI is the highest sub-index, not an average. The pollutant producing it is reported as the main pollutant. Both NAQI and US EPA AQI are computed and returned.
 5. Two time windows: a live AQI from instantaneous readings, for tracking spikes, and a 24-hour rolling average AQI, as the CPCB and EPA rules specify for official reporting. Every API response includes both, plus saved historical data.
 
-## Coverage (as of 2026-10-24)
+## Coverage (as of 2026-11-16)
 
-- Zones with ground sensors (12): Bandipora, Doda, Ganderbal, Jammu, Kargil, Kathua, Leh, Rajouri, Reasi, Samba, Srinagar, Udhampur
-- Zones on satellite data only (13): Anantnag, Baramulla, Handwara, Katra, Kishtwar, Kulgam, Kupwara, Pahalgam, Poonch, Pulwama, Ramban, Shopian, Sopore
+- Zones with ground sensors (13): Bandipora, Doda, Ganderbal, Jammu, Kargil, Kathua, Leh, Poonch, Rajouri, Reasi, Samba, Srinagar, Udhampur
+- Zones on satellite data only (12): Anantnag, Baramulla, Handwara, Katra, Kishtwar, Kulgam, Kupwara, Pahalgam, Pulwama, Ramban, Shopian, Sopore
 - Srinagar has the most sensors (6), then Jammu (4) and Rajouri (2).
 
 Anyone with stable power and internet can host a sensor at home, in a shop or on a rooftop. See Contributing below.
